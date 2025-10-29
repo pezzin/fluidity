@@ -9,11 +9,14 @@ import { KNOWLEDGE_BASE } from "@/data/knowledge"
 type Block = {
   title: string
   content: string
+  id?: string
+  tags?: string[]
 }
 
 export default function Home() {
   const [prompt, setPrompt] = useState("")
-  const [blocks, setBlocks] = useState<Block[]>([])
+  const [primaryBlocks, setPrimaryBlocks] = useState<Block[]>([])
+  const [secondaryBlocks, setSecondaryBlocks] = useState<Block[]>([])
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
@@ -25,13 +28,19 @@ export default function Home() {
       .replace(/[^\w\s]/g, '')
       .split(/\s+/)
 
-    const results = KNOWLEDGE_BASE.filter(block =>
-      block.tags.some(tag =>
-        normalized.some(word => word.includes(tag) || tag.includes(word))
-      )
-    )
+    const matches = KNOWLEDGE_BASE.map((block) => {
+      const matchScore = block.tags?.reduce((acc, tag) => {
+        return acc + normalized.filter(word => word.includes(tag) || tag.includes(word)).length
+      }, 0) || 0
 
-    setBlocks(results)
+      return { ...block, matchScore }
+    })
+
+    const primary = matches.filter(b => b.matchScore > 0).sort((a, b) => b.matchScore - a.matchScore)
+    const secondary = KNOWLEDGE_BASE.filter(b => !primary.find(p => p.id === b.id))
+
+    setPrimaryBlocks(primary.slice(0, 1))
+    setSecondaryBlocks(secondary)
     setLoading(false)
   }
 
@@ -58,16 +67,38 @@ export default function Home() {
         </Button>
       </div>
 
-      <div className="mt-12 grid gap-4 max-w-3xl mx-auto">
-        {blocks.map((block, i) => (
-          <Card key={i}>
-            <CardContent className="p-4">
-              <h2 className="text-xl font-semibold mb-2">{block.title}</h2>
-              <p>{block.content}</p>
-            </CardContent>
-          </Card>
-        ))}
-        {blocks.length === 0 && !loading && (
+      <div className="mt-12 max-w-3xl mx-auto">
+        {primaryBlocks.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-red-600 mb-4">📌 Risposta principale</h2>
+            {primaryBlocks.map((block, i) => (
+              <Card key={i} className="border-red-400 border-2 shadow-md">
+                <CardContent className="p-6">
+                  <h3 className="text-2xl font-semibold mb-3">{block.title}</h3>
+                  <p>{block.content}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {secondaryBlocks.length > 0 && (
+          <div>
+            <h2 className="text-xl font-semibold text-gray-600 mb-2">🔎 Forse ti potrebbe interessare anche...</h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              {secondaryBlocks.map((block, i) => (
+                <Card key={i} className="bg-white border border-gray-200">
+                  <CardContent className="p-4">
+                    <h4 className="text-lg font-bold mb-2">{block.title}</h4>
+                    <p className="text-sm text-gray-700">{block.content}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {primaryBlocks.length === 0 && !loading && (
           <p className="text-center text-gray-500">Nessuna informazione trovata per il prompt inserito.</p>
         )}
       </div>
