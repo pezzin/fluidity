@@ -2,8 +2,8 @@ import './globals.css'
 import { ReactNode } from 'react'
 
 export const metadata = {
-  title: 'Prompt Landing',
-  description: 'Landing dinamica per università basata su prompt',
+  title: 'Nextor University',
+  description: 'Framework per gestire landing page dinamiche in base alla richiesta dell'utente.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
