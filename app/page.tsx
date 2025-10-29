@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <div className="min-h-screen p-8 bg-gray-50">
       <div className="max-w-2xl mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-4">Cosa stai cercando?</h1>
+        <h1 className="text-4xl font-bold mb-4">Benvenuto alla Nextor University. Cosa stai cercando?</h1>
         <Input
           placeholder="Scrivi ad esempio: 'Voglio sapere tutto sul corso di Psicologia'"
           value={prompt}
