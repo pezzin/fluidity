@@ -28,6 +28,13 @@ export default function Home() {
     setLoading(false)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSubmit()
+    }
+  }
+
   return (
     <div className="min-h-screen p-8 bg-gray-50">
       <div className="max-w-2xl mx-auto text-center">
@@ -36,6 +43,7 @@ export default function Home() {
           placeholder="Scrivi ad esempio: 'Voglio sapere tutto sul corso di Psicologia'"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
+          onKeyDown={handleKeyDown}
           className="mb-4"
         />
         <Button onClick={handleSubmit} disabled={loading}>
