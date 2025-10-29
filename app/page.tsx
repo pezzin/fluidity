@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { KNOWLEDGE_BASE } from "@/data/knowledge"
+import Image from "next/image"
 
 type Block = {
   title: string
@@ -55,9 +56,15 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
-      <div className="max-w-2xl mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-4">Benvenuto alla Nextor University. Cosa stai cercando?</h1>
+    <div className="min-h-screen p-8 bg-gradient-to-br from-blue-50 to-purple-100">
+      <div className="max-w-3xl mx-auto text-center">
+        <div className="flex justify-center items-center gap-3 mb-2">
+          <Image src="/nextor-logo.png" alt="Nextor University" width={40} height={40} />
+          <h1 className="text-3xl font-extrabold tracking-tight">Nextor University</h1>
+        </div>
+        <h2 className="text-4xl font-bold mb-2">Benvenuto 👋</h2>
+        <p className="text-xl text-gray-700 mb-6">Cosa stai cercando?</p>
+
         <Input
           placeholder="Scrivi ad esempio: 'Voglio sapere tutto sul corso di Psicologia'"
           value={prompt}
@@ -68,6 +75,8 @@ export default function Home() {
         <Button onClick={handleSubmit} disabled={loading}>
           {loading ? '🎓 Sto cercando le info per te...' : 'Crea la mia interfaccia'}
         </Button>
+
+        <div className="mt-8 text-sm text-gray-500">💡 Prova: biblioteca, immatricolazione, erasmus, mensa...</div>
       </div>
 
       <div className="mt-12 max-w-3xl mx-auto">
