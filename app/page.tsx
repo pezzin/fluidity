@@ -89,7 +89,7 @@ export default function Home() {
             </Button>
 
             <div className="flex flex-wrap gap-2 justify-center mt-6">
-              {['Erasmus', 'Mensa', 'Iscrizione', 'Segreteria'].map((tag, i) => (
+              {['Info su Erasmus', 'Orari della mensa', 'Come faccio a iscrivermi', 'Orario segreteria'].map((tag, i) => (
                 <button
                   key={i}
                   onClick={() => setPrompt(tag)}
