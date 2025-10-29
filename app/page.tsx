@@ -36,10 +36,11 @@ export default function Home() {
       return { ...block, matchScore }
     })
 
-    const primary = matches.filter(b => b.matchScore > 0).sort((a, b) => b.matchScore - a.matchScore)
+    const ranked = matches.sort((a, b) => b.matchScore - a.matchScore)
+    const primary = ranked[0]?.matchScore > 1 ? [ranked[0]] : []
     const secondary = KNOWLEDGE_BASE.filter(b => !primary.find(p => p.id === b.id))
 
-    setPrimaryBlocks(primary.slice(0, 1))
+    setPrimaryBlocks(primary)
     setSecondaryBlocks(secondary)
     setLoading(false)
   }
