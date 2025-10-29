@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export default function Home() {
   const [prompt, setPrompt] = useState("")
-  const [blocks, setBlocks] = useState<any[]>([])
+  const [blocks, setBlocks] = useState([])
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
