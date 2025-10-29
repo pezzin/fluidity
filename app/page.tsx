@@ -56,37 +56,55 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen p-8 bg-gradient-to-br from-blue-50 to-purple-100">
-      <div className="max-w-3xl mx-auto text-center">
-        <div className="flex justify-center items-center gap-3 mb-2">
+    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4 py-16">
+      <div className="max-w-3xl w-full text-center">
+        <div className="flex justify-center items-center gap-3 mb-6">
           <Image src="/nextor-logo.png" alt="Nextor University" width={40} height={40} />
-          <h1 className="text-3xl font-extrabold tracking-tight">Nextor University</h1>
+          <h1 className="text-4xl font-bold tracking-tight">Nextor University</h1>
         </div>
-        <p className="text-xl text-gray-700 mb-6">Cosa stai cercando?</p>
 
-        <Input
-          placeholder="Scrivi ad esempio: 'Voglio sapere tutto sul corso di Psicologia'"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="mb-4"
-        />
-        <Button onClick={handleSubmit} disabled={loading}>
-          {loading ? '🎓 Sto cercando le info per te...' : 'Crea la mia interfaccia'}
-        </Button>
+        <h2 className="text-3xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-transparent bg-clip-text">
+          Dove le idee diventano realtà
+        </h2>
+        <p className="text-gray-400 mb-10 text-lg">
+          Crea la tua interfaccia universitaria semplicemente scrivendo ciò che ti serve ✨
+        </p>
 
-        <div className="mt-8 text-sm text-gray-500">💡 Prova: biblioteca, immatricolazione, erasmus, mensa...</div>
+        <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 flex flex-col items-center">
+          <Input
+            placeholder="Es. Voglio sapere tutto su psicologia"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="w-full max-w-2xl mb-4 text-black"
+          />
+          <Button onClick={handleSubmit} disabled={loading}>
+            {loading ? '🎓 Sto cercando le info per te...' : 'Crea la mia interfaccia'}
+          </Button>
+
+          <div className="flex flex-wrap gap-2 justify-center mt-6">
+            {['Erasmus', 'Mensa', 'Iscrizione', 'Segreteria'].map((tag, i) => (
+              <button
+                key={i}
+                onClick={() => setPrompt(tag)}
+                className="px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-sm hover:bg-zinc-700"
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="mt-12 max-w-3xl mx-auto">
+      <div className="mt-16 max-w-4xl w-full">
         {primaryBlocks.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-red-600 mb-4">📌 Risposta principale</h2>
+            <h2 className="text-xl font-bold text-red-400 mb-4">📌 Risposta principale</h2>
             {primaryBlocks.map((block, i) => (
-              <Card key={i} className="border-red-400 border-2 shadow-md">
+              <Card key={i} className="border-red-400 border-2 shadow-md bg-zinc-800">
                 <CardContent className="p-6">
-                  <h3 className="text-2xl font-semibold mb-3">{block.title}</h3>
-                  <p>{block.content}</p>
+                  <h3 className="text-2xl font-semibold mb-3 text-white">{block.title}</h3>
+                  <p className="text-gray-300">{block.content}</p>
                 </CardContent>
               </Card>
             ))}
@@ -95,13 +113,13 @@ export default function Home() {
 
         {secondaryBlocks.length > 0 && (
           <div>
-            <h2 className="text-xl font-semibold text-gray-600 mb-2">🔎 Forse ti potrebbe interessare anche...</h2>
+            <h2 className="text-lg font-semibold text-gray-400 mb-2">🔎 Altre informazioni utili</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {secondaryBlocks.map((block, i) => (
-                <Card key={i} className="bg-white border border-gray-200">
+                <Card key={i} className="bg-zinc-900 border border-zinc-700">
                   <CardContent className="p-4">
-                    <h4 className="text-lg font-bold mb-2">{block.title}</h4>
-                    <p className="text-sm text-gray-700">{block.content}</p>
+                    <h4 className="text-lg font-bold mb-2 text-white">{block.title}</h4>
+                    <p className="text-sm text-gray-300">{block.content}</p>
                   </CardContent>
                 </Card>
               ))}
