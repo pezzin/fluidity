@@ -19,9 +19,16 @@ export default function Home() {
   const handleSubmit = async () => {
     setLoading(true)
 
-    const words = prompt.toLowerCase().split(/\s+/)
+    const normalized = prompt
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[^\w\s]/g, '')
+      .split(/\s+/)
+
     const results = KNOWLEDGE_BASE.filter(block =>
-      block.tags.some(tag => words.includes(tag))
+      block.tags.some(tag =>
+        normalized.some(word => word.includes(tag) || tag.includes(word))
+      )
     )
 
     setBlocks(results)
