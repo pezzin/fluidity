@@ -60,6 +60,7 @@ export default function Home() {
     <>
       <Head>
         <title>Nextor University</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4 py-16">
         <div className="max-w-3xl w-full text-center">
