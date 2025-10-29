@@ -37,7 +37,9 @@ export default function Home() {
     })
 
     const ranked = matches.sort((a, b) => b.matchScore - a.matchScore)
-    const primary = ranked[0]?.matchScore > 1 ? [ranked[0]] : []
+    const primary = ranked[0]?.matchScore > 1 || (ranked[0]?.matchScore === 1 && ranked[1]?.matchScore === 0)
+      ? [ranked[0]]
+      : []
     const secondary = KNOWLEDGE_BASE.filter(b => !primary.find(p => p.id === b.id))
 
     setPrimaryBlocks(primary)
