@@ -5,9 +5,14 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
+type Block = {
+  title: string
+  content: string
+}
+
 export default function Home() {
   const [prompt, setPrompt] = useState("")
-  const [blocks, setBlocks] = useState([])
+  const [blocks, setBlocks] = useState<Block[]>([])
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
